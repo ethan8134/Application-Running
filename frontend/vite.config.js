@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
@@ -12,23 +11,22 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@mdi': fileURLToPath(new URL('./node_modules/@mdi/font', import.meta.url)), // Alias pour Vuetify (icônes)
     }
   },
-  // Change build paths to make them Maven compatible
   build: {
     outDir: 'target/dist',
     assetsDir: 'static',
   },
-  // Utile uniquement pour le serveur de développement qui tourne sur un autre port que le backend
   server: {
-    proxy: { // On redirige toutes les requêtes au backend vers le serveur de développement java
-      '/api': { // L'API REST autogénérée, correspond à la config du backend spring.data.rest.base-path dans application.properties
-        target: 'http://localhost:8989', // correspond à la config du backend server.port dans application.properties
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8989',
         changeOrigin: true,
       },
-      '/rest': { // L'adresse des contrôleurs ad-hoc pour les services métier
-        target: 'http://localhost:8989', // correspond à la config du backend server.port dans application.properties
+      '/rest': {
+        target: 'http://localhost:8989',
         changeOrigin: true,
       },
     },
