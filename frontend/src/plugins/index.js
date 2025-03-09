@@ -1,7 +1,14 @@
-import vuetify from './vuetify.js'
-import router from '@/router/index.js'
+/**
+ * plugins/index.js
+ *
+ * Automatically included in `./src/main.js`
+ */
 
-export function registerPlugins(app) {
+// Plugins
+import vuetify from './vuetify'
+import router from '@/router'
+
+export function registerPlugins (app) {
   app
     .use(vuetify)
     .use(router)
